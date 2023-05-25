@@ -1,0 +1,45 @@
+.form-container {
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90%;
+}
+
+.input-group {
+  width: 100%;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+label {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  box-shadow: 0 0 15px -10px rgba(0, 0, 0, 0.75);
+  font-size: 1rem;
+}
+
+select {
+  appearance: none;
+  background-color: white;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.4 7.6c.4-.4 1-.4 1.4 0L12 11.6l4.2-4.2c.4-.4 1-.4 1.4 0 .4.4.4 1 0 1.4l-5 5c-.2.2-.5.3-.7.3s-.5-.1-.7-.3l-5-5c-.4-.4-.4-1 0-1.4z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: calc(100% - 10px) center;
+  padding-right: 30px;
+}
