@@ -21,11 +21,9 @@ const SignupForm = ({ onSignup }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Save the user data in localStorage
     localStorage.setItem('name', name);
     localStorage.setItem('email', email);
     localStorage.setItem('password', password);
-    // Invoke the onSignup callback with the user data
     onSignup({ name, email, password });
   };
 
@@ -48,5 +46,5 @@ const SignupForm = ({ onSignup }) => {
     </form>
   );
 };
-
+// git push -u origin master
 export default SignupForm;
