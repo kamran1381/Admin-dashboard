@@ -15,13 +15,11 @@ export default function NewUser() {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   const handleFileChange = (event) => {
-    // const selectedFile = event.target.files[0];
-    // setFile(selectedFile);
-    // setFileDataUrl(URL.createObjectURL(selectedFile));
+  
     const selectedFile = event.target.files[0];
 
-    if (selectedFile.size > 3000) {
-      setlenghtError('File size should not be more than 3MB');
+    if (selectedFile.size > 10485760) {
+      setlenghtError('File size should not be more than 10MB');
       setFile(null);
       setFileDataUrl('');
       return;
@@ -34,16 +32,15 @@ export default function NewUser() {
 
   function handleSubmit(event) {
     event.preventDefault();
-
+  
     if (name.length < 7 || email.length < 7) {
       return;
     }
-
-
+  
     if (!emailRegex.test(email)) {
       return;
     }
-
+  
     const newUser = {
       id: counter,
       name,
@@ -51,10 +48,10 @@ export default function NewUser() {
       gender,
       file: file ? file.name : '',
     };
-
-    setUsers([...users, newUser]);
+  
+    setUsers(prevUsers => [...prevUsers, newUser]);
     localStorage.setItem('users', JSON.stringify([...users, newUser]));
-
+  
     setName('');
     setEmail('');
     setGender('');
