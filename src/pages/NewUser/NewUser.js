@@ -1,6 +1,5 @@
 import React, { useState, useContext } from 'react';
 import './NewUser.css'
-import { Prev } from 'react-bootstrap/esm/PageItem';
 import { AppContext } from '../../AppContext';
 
 export default function NewUser() {
@@ -9,28 +8,11 @@ export default function NewUser() {
   const [gender, setGender] = useState('');
   const [file, setFile] = useState(null);
   const [users, setUsers] = useState(JSON.parse(localStorage.getItem('users')) || []);
-  const [counter, setcounter] = useState(0)
   const { setFileDataUrl } = useContext(AppContext)
-  const [lengthError, setlenghtError] = useState('')
+  const [lengthError, setLengthError] = useState('')
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  const handleFileChange = (event) => {
-  
-    const selectedFile = event.target.files[0];
-
-    if (selectedFile.size > 10485760) {
-      setlenghtError('File size should not be more than 10MB');
-      setFile(null);
-      setFileDataUrl('');
-      return;
-    }
-
-    setFile(selectedFile);
-    setFileDataUrl(URL.createObjectURL(selectedFile));
-    setlenghtError('');
-  }
-
-  function handleSubmit(event) {
+  const handleSubmit = (event) => {
     event.preventDefault();
   
     if (name.length < 7 || email.length < 7) {
@@ -40,24 +22,42 @@ export default function NewUser() {
     if (!emailRegex.test(email)) {
       return;
     }
+
+    const newId = users.length > 0 ? users[users.length - 1].id + 1 : 1;
   
     const newUser = {
-      id: counter,
+      id: newId,
       name,
       email,
       gender,
       file: file ? file.name : '',
     };
   
-    setUsers(prevUsers => [...prevUsers, newUser]);
+    setUsers([...users, newUser]);
     localStorage.setItem('users', JSON.stringify([...users, newUser]));
   
     setName('');
     setEmail('');
     setGender('');
     setFile(null);
-    setcounter(counter + 1)
   }
+
+  const handleFileChange = (event) => {
+    const selectedFile = event.target.files[0];
+
+    if (selectedFile.size > 10485760) {
+      setLengthError('File size should not be more than 10MB');
+      setFile(null);
+      setFileDataUrl('');
+      return;
+    }
+
+    setFile(selectedFile);
+    setFileDataUrl(URL.createObjectURL(selectedFile));
+    setLengthError('');
+  }
+
+
 
   return (
     <>
@@ -114,3 +114,22 @@ export default function NewUser() {
     </>
   )
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,15 +1,13 @@
-import { useState, useEffect, useContext , useRef} from "react";
+import { useState, useEffect, useContext, useRef } from "react";
 import { DataGrid } from '@mui/x-data-grid';
 import { DeleteOutlined } from "@mui/icons-material";
-import { Link } from "react-router-dom";
 import { AppContext } from "../../AppContext";
 import { Modal } from 'react-bootstrap';
 
 export default function UserList() {
   const [userDatas, setUserDatas] = useState([]);
   const [editingUser, setEditingUser] = useState(null);
-  const { fileDataUrl } = useContext(AppContext);
-
+  const { fileDataUrl , setFileDataUrl} = useContext(AppContext);
   useEffect(() => {
     const localStorageUsers = JSON.parse(localStorage.getItem("users")) || [];
     setUserDatas(localStorageUsers);
@@ -38,20 +36,22 @@ export default function UserList() {
         } : user.file,
       } : user
     );
-  
+
     setUserDatas(updatedUserDatas);
     localStorage.setItem("users", JSON.stringify(updatedUserDatas));
-  
+
     // Convert file data to Base64 and update the user object
     if (fileRef.current.files.length > 0) {
       const reader = new FileReader();
       reader.onloadend = () => {
         const base64 = reader.result.split(",")[1];
-        const updatedUser = updatedUserDatas.find(user => user.email === editingUser.email);
-        updatedUser.file.data = base64; // Populate the data property
+        const updatedUser = updatedUserDatas.find((user) => user.email === editingUser.email);
+        updatedUser.file.data = base64;
         setUserDatas(updatedUserDatas);
         localStorage.setItem("users", JSON.stringify(updatedUserDatas));
         setEditingUser(null);
+
+        setFileDataUrl(`data:${updatedUser.file.type};base64,${base64}`);
       };
       reader.readAsDataURL(fileRef.current.files[0]);
     } else {
@@ -63,10 +63,10 @@ export default function UserList() {
     { field: 'name', headerName: 'Name', width: 200 },
     { field: 'email', headerName: 'Email', width: 300 },
     { field: 'gender', headerName: 'Gender', width: 120 },
-    { 
-      field: 'file', 
+    {
+      field: 'file',
       headerName: 'File',
-      width: 200 , 
+      width: 200,
       renderCell: (params) => {
         return params.row.file ? (
           <img src={fileDataUrl || '#'} alt='File' style={{ height: '50px' }} />
@@ -74,9 +74,9 @@ export default function UserList() {
       }
     },
     {
-      field: 'action', 
-      headerName: 'Action', 
-      width: 200, 
+      field: 'action',
+      headerName: 'Action',
+      width: 200,
       renderCell: (params) => {
         return (
           <>
@@ -106,7 +106,7 @@ export default function UserList() {
         <DataGrid
           rows={userDatas}
           columns={columns}
-          getRowId={(userDatas)=> userDatas.email}
+          getRowId={(userDatas)=> userDatas.id}
           pageSize={5}
           disableSelectionOnClick
         />
@@ -136,7 +136,7 @@ export default function UserList() {
             </div>
             <div className="form-group">
               <label htmlFor="file">File</label>
-              <input type="file" className="form-control-file" id="file" ref={fileRef}/>
+              <input type="file" className="form-control-file" id="file" ref={fileRef} />
             </div>
           </form>
         </Modal.Body>
@@ -144,7 +144,7 @@ export default function UserList() {
           <button variant="secondary" onClick={() => setEditingUser(null)}>
             Close
           </button>
-          <button variant="primary"  onClick={() => handleSave()}>
+          <button variant="primary" onClick={() => handleSave()}>
             Save Changes
           </button>
         </Modal.Footer>
