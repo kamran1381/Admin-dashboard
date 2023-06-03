@@ -9,8 +9,8 @@ import SignupForm from './SignUpForm';
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [fileDataUrl, setFileDataUrl] = useState('');
-
+  // const [fileDataUrl, setFileDataUrl] = useState('');
+   const [fileDataUrls , setFileDataUrls ] = useState([])
   let router = useRoutes(routes);
 
   useEffect(() => {
@@ -29,11 +29,14 @@ export default function App() {
     setIsLoggedIn(true);
   };
 
+  const setFileDataUrl = (url) =>{
+    setFileDataUrls((prev)=>[...prev , url])
+  }
   return (
     <>
       {!isLoggedIn && <SignupForm onSignup={handleSignup} />}
       {isLoggedIn && (
-        <AppContext.Provider value={{ fileDataUrl, setFileDataUrl }}>
+        <AppContext.Provider value={{fileDataUrls , setFileDataUrl}}>
           <Topbar />
           <div className="App-container">
             <Sidebar />

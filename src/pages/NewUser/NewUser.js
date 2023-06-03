@@ -8,7 +8,7 @@ export default function NewUser() {
   const [gender, setGender] = useState('');
   const [file, setFile] = useState(null);
   const [users, setUsers] = useState(JSON.parse(localStorage.getItem('users')) || []);
-  const { setFileDataUrl } = useContext(AppContext)
+  const { setFileDataUrl  } = useContext(AppContext)
   const [lengthError, setLengthError] = useState('')
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -51,9 +51,16 @@ export default function NewUser() {
       setFileDataUrl('');
       return;
     }
-
+  
     setFile(selectedFile);
-    setFileDataUrl(URL.createObjectURL(selectedFile));
+  
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const dataUrl = reader.result;
+      setFileDataUrl(dataUrl);
+    };
+    reader.readAsDataURL(selectedFile);
+  
     setLengthError('');
   }
 
@@ -114,19 +121,6 @@ export default function NewUser() {
     </>
   )
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -7,7 +7,7 @@ import { Modal } from 'react-bootstrap';
 export default function UserList() {
   const [userDatas, setUserDatas] = useState([]);
   const [editingUser, setEditingUser] = useState(null);
-  const { fileDataUrl , setFileDataUrl} = useContext(AppContext);
+  const { fileDataUrls , setFileDataUrl} = useContext(AppContext);
   useEffect(() => {
     const localStorageUsers = JSON.parse(localStorage.getItem("users")) || [];
     setUserDatas(localStorageUsers);
@@ -32,26 +32,29 @@ export default function UserList() {
         file: fileRef.current.files.length > 0 ? {
           name: fileRef.current.files[0].name,
           type: fileRef.current.files[0].type,
-          data: null // We'll populate this below
+          data: null ,
         } : user.file,
       } : user
     );
 
     setUserDatas(updatedUserDatas);
     localStorage.setItem("users", JSON.stringify(updatedUserDatas));
-
-    // Convert file data to Base64 and update the user object
     if (fileRef.current.files.length > 0) {
+      console.log(fileRef.current.files);
+
       const reader = new FileReader();
       reader.onloadend = () => {
         const base64 = reader.result.split(",")[1];
-        const updatedUser = updatedUserDatas.find((user) => user.email === editingUser.email);
+        const updatedUser = updatedUserDatas.find((user) => user.id === editingUser.id);
         updatedUser.file.data = base64;
-        setUserDatas(updatedUserDatas);
-        localStorage.setItem("users", JSON.stringify(updatedUserDatas));
         setEditingUser(null);
-
-        setFileDataUrl(`data:${updatedUser.file.type};base64,${base64}`);
+    
+        // Set the new file data URL
+        setFileDataUrl((prev) => [
+          ...prev.slice(0, updatedUser.id - 1),
+          `data:${updatedUser.file.type};base64,${base64}`,
+          ...prev.slice(updatedUser.id),
+        ]);
       };
       reader.readAsDataURL(fileRef.current.files[0]);
     } else {
@@ -68,8 +71,9 @@ export default function UserList() {
       headerName: 'File',
       width: 200,
       renderCell: (params) => {
+        const index = params.row.id - 1;
         return params.row.file ? (
-          <img src={fileDataUrl || '#'} alt='File' style={{ height: '50px' }} />
+          <img src={fileDataUrls[index] || '#'} alt='File' style={{ height: '50px' }} />
         ) : null;
       }
     },
