@@ -40,7 +40,6 @@ export default function UserList() {
     setUserDatas(updatedUserDatas);
     localStorage.setItem("users", JSON.stringify(updatedUserDatas));
     if (fileRef.current.files.length > 0) {
-      console.log(fileRef.current.files);
 
       const reader = new FileReader();
       reader.onloadend = () => {
