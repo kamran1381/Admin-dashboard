@@ -5,11 +5,10 @@ import Topbar from './components/topbar/Topbar';
 import Sidebar from './components/sidebar/Sidebar';
 import { AppContext } from './AppContext';
 import './App.css';
-import SignupForm from './SignUpForm';
+import SignupForm from './Signupform/SignUpForm';
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  // const [fileDataUrl, setFileDataUrl] = useState('');
    const [fileDataUrls , setFileDataUrls ] = useState([])
   let router = useRoutes(routes);
 
