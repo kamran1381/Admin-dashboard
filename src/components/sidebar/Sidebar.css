@@ -42,3 +42,20 @@
   margin-right: 5px;
   font-size: 20px;
 }
+
+
+/* --------- */
+
+@media screen and (max-width: 768px) {
+  .sidebar {
+    height: calc(100vh - 50px);
+    width: 100%;
+  }
+}
+
+@media screen and (min-width: 769px) {
+  .sidebar {
+    height: calc(100vh - 50px);
+    width: 200px;
+  }
+}

@@ -48,3 +48,24 @@
     font-size: 15px;
     color: gray;
   }
+
+
+
+/* ------ */
+
+@media (max-width: 768px) {
+  .features {
+    flex-wrap: wrap;
+  }
+
+  .featureItem {
+    flex: 0 0 calc(50% - 40px);
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 576px) {
+  .featureItem {
+    flex: 0 0 100%;
+  }
+}
