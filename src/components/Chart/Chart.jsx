@@ -17,6 +17,7 @@ export default function Chart({ title, dataKey, grid }) {
   const [primaryYAxisProp, setPrimaryYAxisProp] = useState('');
   const [secondaryYAxisProp, setSecondaryYAxisProp] = useState('');
 
+  
   const fetchData = async () => {
     const response = await fetch('https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY&symbol=IBM&apikey=BAYX40V2VW505Z2R&datatype=csv');
     let primaryYAxisProperty = '';
@@ -37,6 +38,9 @@ export default function Chart({ title, dataKey, grid }) {
 
   useEffect(() => {
     fetchData();
+    return () =>{
+      setData({})
+    }
   }, []);
 
   return (

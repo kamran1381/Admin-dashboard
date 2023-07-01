@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import './signup.css';
 
 const SignupForm = ({ onSignup }) => {
   const [name, setName] = useState(localStorage.getItem('name') || '');
   const [email, setEmail] = useState(localStorage.getItem('email') || '');
   const [password, setPassword] = useState('');
+  const [errors, setErrors] = useState({});
 
   const handleNameChange = (event) => {
     setName(event.target.value);
@@ -21,30 +23,49 @@ const SignupForm = ({ onSignup }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    localStorage.setItem('name', name);
-    localStorage.setItem('email', email);
-    localStorage.setItem('password', password);
-    onSignup({ name, email, password });
+
+    const errors = {};
+    if (!name.trim()) {
+      errors.name = 'Name is required';
+    }
+    if (!email.trim()) {
+      errors.email = 'Email is required';
+    }
+    if (!password.trim()) {
+      errors.password = 'Password is required';
+    }
+
+    if (Object.keys(errors).length === 0) {
+      localStorage.setItem('name', name);
+      localStorage.setItem('email', email);
+      localStorage.setItem('password', password);
+      onSignup({ name, email, password });
+    } else {
+      setErrors(errors);
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="signup-form">
       <h2>Sign Up</h2>
-      <div>
+      <div className="form-group">
         <label htmlFor="name">Name:</label>
-        <input type="text" id="name" value={name} onChange={handleNameChange} />
+        <input type="text" id="name" value={name} onChange={handleNameChange} /><br/>
+        {errors.name && <span className="error">{errors.name}</span>}
       </div>
-      <div>
+      <div className="form-group">
         <label htmlFor="email">Email:</label>
-        <input type="email" id="email" value={email} onChange={handleEmailChange} />
+        <input type="email" id="email" value={email} onChange={handleEmailChange} /><br/>
+        {errors.email && <span className="error">{errors.email}</span>}
       </div>
-      <div>
+      <div className="form-group">
         <label htmlFor="password">Password:</label>
-        <input type="password" id="password" value={password} onChange={handlePasswordChange} />
+        <input type="password" id="password" value={password} onChange={handlePasswordChange} /><br/>
+        {errors.password && <span className="error">{errors.password}</span>}
       </div>
-      <button type="submit" >Sign Up</button>
+      <button type="submit" className="submit-button">Sign Up</button>
     </form>
   );
 };
-// git push -u origin master
+
 export default SignupForm;

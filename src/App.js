@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect , useRef} from 'react';
 import routes from './routes';
 import { useRoutes } from 'react-router-dom';
 import Topbar from './components/topbar/Topbar';
@@ -43,17 +43,10 @@ export default function App() {
           </div>
         </AppContext.Provider>
       )}
+
     </>
   );
 }
-
-
-
-
-
-
-
-
 
 
 
