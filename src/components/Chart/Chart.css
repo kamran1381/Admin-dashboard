@@ -1,4 +1,4 @@
-.chart {
+/* .chart {
     margin: 20px;
     padding: 20px;
     box-shadow: 0 0 15px -10px rgba(0, 0, 0, 0.75);
@@ -6,4 +6,31 @@
 
 .chartTitle {
     margin-bottom: 20px;
-}
+} */
+
+
+.chart {
+    margin: 20px;
+    padding: 20px;
+    box-shadow: 0 0 15px -10px rgba(0, 0, 0, 0.75);
+  }
+  
+  .chartTitle {
+    margin-bottom: 20px;
+  }
+  
+  /* Media Query */
+  @media (max-width: 768px) {
+    .chart {
+      margin: 10px;
+      padding: 10px;
+    }
+  
+    .chartTitle {
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+  }
+  
+  /* Add more media queries as needed for different screen sizes */
+  

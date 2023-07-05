@@ -64,3 +64,4 @@ export default function Chart({ title, dataKey, grid }) {
     </div>
   );
 }
+
