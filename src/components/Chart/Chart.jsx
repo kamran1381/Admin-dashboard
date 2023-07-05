@@ -46,7 +46,7 @@ export default function Chart({ title, dataKey, grid }) {
   return (
     <div className="chart">
       <h3 className="chartTitle">{title}</h3>
-      <ResponsiveContainer width="100%" aspect={4}>
+      <ResponsiveContainer width="95%" height={400}>
         <LineChart data={data}>
           <XAxis dataKey="name" stroke="#5550bd" />
           <YAxis stroke="#5550bd" yAxisId="left">
